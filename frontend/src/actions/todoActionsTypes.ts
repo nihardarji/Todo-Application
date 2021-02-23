@@ -7,10 +7,10 @@ export const ADD_TODO_SUCCESS = 'ADD_TODO_SUCCESS'
 export const ADD_TODO_FAIL = 'ADD_TODO_FAIL'
 
 export interface ITodo {
-    _id: string,
+    _id?: string,
     name: string
     description: string
-    status: boolean
+    status?: boolean
     createdAt?: string
     updatedAt?: string
 }

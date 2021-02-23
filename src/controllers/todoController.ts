@@ -4,7 +4,7 @@ import Todo from '../models/todoModel'
 
 const getTodos = async (req: Request, res: Response): Promise<void> => {
     try {
-        const todos: ITodo[] = await Todo.find({})
+        const todos: ITodo[] = await Todo.find({}).sort({ createdAt: -1 })
 
         res.json(todos)
     } catch (error) {
@@ -14,12 +14,11 @@ const getTodos = async (req: Request, res: Response): Promise<void> => {
 
 const addTodo = async (req: Request, res: Response): Promise<void> => {
     try {
-        const body = req.body as Pick<ITodo, 'name' | 'description' | 'status'>
+        const body = req.body as Pick<ITodo, 'name' | 'description'>
 
         const todo: ITodo = new Todo({
             name: body.name,
-            description: body.description,
-            status: body.status
+            description: body.description
         })
 
         const newTodo = await todo.save()
@@ -39,7 +38,7 @@ const updateTodo = async (req: Request, res: Response): Promise<void> => {
 
         if (todo) {
             todo.name = body.name || todo.name
-            todo.description = body.name || todo.description
+            todo.description = body.description || todo.description
             todo.status = body.status
 
             const updatedTodo = await todo.save()

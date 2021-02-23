@@ -1,19 +1,20 @@
 import React from 'react'
-import { Button, Nav, Navbar } from 'react-bootstrap'
+import { Nav, Navbar } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 const Header = () => {
 
     return (
-        <Navbar bg="dark" variant="dark">
-            <Navbar.Brand>
+        <Navbar collapseOnSelect expand="sm" bg="dark" variant="dark">
+            <Link to='/' className='navbar-brand'>
             <i className="fa fa-list-ul mr-2" aria-hidden="true"></i>
             Todo App
-            </Navbar.Brand>
+            </Link>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="ml-auto">
-                <Button className='btn btn-dark nav-link text-light'>Create Todo</Button>
-            </Nav>
+                <Nav className="ml-auto">
+                    <Link to='/edit/todo' className='btn btn-dark nav-link text-light'>Create Todo</Link>
+                </Nav>
             </Navbar.Collapse>
         </Navbar>
     )
