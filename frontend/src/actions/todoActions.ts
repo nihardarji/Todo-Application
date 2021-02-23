@@ -2,7 +2,7 @@ import { Dispatch } from 'redux'
 import axios from 'axios'
 import { AddTodoDispatch, ADD_TODO_FAIL, ADD_TODO_REQUEST, ADD_TODO_SUCCESS, GetTodosDispatch, GET_TODOS_FAIL, GET_TODOS_REQUEST, GET_TODOS_SUCCESS, ITodo } from './todoActionsTypes'
 
-export const getTodos = () => async (dispatch: Dispatch<GetTodosDispatch>) => {
+export const getTodoList = () => async (dispatch: Dispatch<GetTodosDispatch>) => {
     try {
         dispatch({ type: GET_TODOS_REQUEST })
 
