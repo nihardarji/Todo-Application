@@ -1,6 +1,6 @@
 import { Dispatch } from 'redux'
 import axios from 'axios'
-import { AddTodoDispatch, ADD_TODO_FAIL, ADD_TODO_REQUEST, ADD_TODO_SUCCESS, GetTodosDispatch, GET_TODOS_FAIL, GET_TODOS_REQUEST, GET_TODOS_SUCCESS, ITodo } from './todoActionsTypes'
+import { AddTodoDispatch, ADD_TODO_FAIL, ADD_TODO_REQUEST, ADD_TODO_SUCCESS, GetTodosDispatch, GetTodoDispatch, GET_TODOS_FAIL, GET_TODOS_REQUEST, GET_TODOS_SUCCESS, ITodo, GET_TODO_REQUEST, GET_TODO_SUCCESS, GET_TODO_FAIL } from './todoActionsTypes'
 
 export const getTodoList = () => async (dispatch: Dispatch<GetTodosDispatch>) => {
     try {
@@ -16,6 +16,25 @@ export const getTodoList = () => async (dispatch: Dispatch<GetTodosDispatch>) =>
     } catch (error) {
         dispatch({
             type: GET_TODOS_FAIL,
+            payload: error.response
+        })
+    }
+}
+
+export const getTodoById = (id: string) => async (dispatch: Dispatch<GetTodoDispatch>) => {
+    try {
+        dispatch({ type: GET_TODO_REQUEST })
+
+        const { data } = await axios.get(`/api/todos/${id}`)
+
+        dispatch({
+            type: GET_TODO_SUCCESS,
+            payload: data
+        })
+        
+    } catch (error) {
+        dispatch({
+            type: GET_TODO_FAIL,
             payload: error.response
         })
     }

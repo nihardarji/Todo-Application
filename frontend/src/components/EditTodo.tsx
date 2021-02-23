@@ -1,24 +1,49 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
-import { useDispatch } from 'react-redux'
-import { RouteComponentProps } from 'react-router-dom'
-import { addTodo } from '../actions/todoActions'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, RouteComponentProps } from 'react-router-dom'
+import { addTodo, getTodoById } from '../actions/todoActions'
+import { ITodo } from '../actions/todoActionsTypes'
+import { RootStore } from '../store'
 
-type EditTodoProps = RouteComponentProps
+interface RouteParams { id?: string }
+interface EditTodoProps extends RouteComponentProps<RouteParams>{}
 
-const EditTodo: React.FC<EditTodoProps> = ({ history }) => {
+const EditTodo: React.FC<EditTodoProps> = ({ history, match }) => {
+    const todoId = match.params.id
     const [name, setName] = useState<string>('')
     const [description, setDescription] = useState<string>('')
 
+    const getTodo = useSelector((state: RootStore) => state.getTodo)
+    const { todo } = getTodo
+
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        if(todoId){
+            if(!(todo as ITodo).name || (todo as ITodo)._id !== todoId){
+                dispatch(getTodoById(todoId))
+            } else {
+                setName((todo as ITodo).name)
+                setDescription((todo as ITodo).description)
+            }
+        } else {
+            setName('')
+            setDescription('')
+        }
+    }, [todoId, todo, dispatch])
 
     const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        dispatch(addTodo({
-            name,
-            description
-        }))
-        history.push('/')
+        if(todoId){
+            console.log('Update Todo')
+        } else {
+            dispatch(addTodo({
+                name,
+                description
+            }))
+            history.push('/')
+        }
     }
 
     return (
@@ -43,7 +68,7 @@ const EditTodo: React.FC<EditTodoProps> = ({ history }) => {
                 />
             </Form.Group>
             <Button type='submit' className='mr-2 my-2'>Save</Button>
-            <Button className='ml-2 my-2'>Cancel</Button>
+            <Link to='/' className='btn btn-primary mr-2 my-2'>Cancel</Link>
         </Form>
     )
 }

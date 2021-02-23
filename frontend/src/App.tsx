@@ -12,7 +12,7 @@ function App() {
         <Route render={() => <Header/>} /> 
         <Container className='my-3'>
             <Route exact path='/' component={TodoList} />
-            <Route exact path='/edit/todo' component={EditTodo} />
+            <Route exact path='/edit/todo/:id?' component={EditTodo} />
         </Container>
       </Router>
     </div>
