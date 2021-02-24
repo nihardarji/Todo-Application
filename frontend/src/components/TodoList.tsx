@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Card } from 'react-bootstrap'
+import { Badge, Button, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { getTodoList } from '../actions/todoActions'
@@ -30,7 +30,16 @@ const TodoList = () => {
                         <Card.Text>
                             {todo.description}
                         </Card.Text>
-                        <Link to={`/edit/todo/${todo._id}`} className='btn btn-success btn-sm'>Edit</Link>
+                        <div className='d-flex justify-content-between align-items-center'>
+                            {!todo.status ? 
+                                <Button className='btn btn-success btn-sm'>Mark as Complete</Button>
+                            :
+                                <div>
+                                    <Badge pill className='p-2' variant='success'> <i className='fa fa-check'></i> Completed</Badge>
+                                </div>
+                            }
+                            <Link to={`/edit/todo/${todo._id}`} className='btn btn-success btn-sm'>Edit</Link>
+                        </div>
                     </Card.Body>
                 </Card>
             ))}

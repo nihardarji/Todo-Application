@@ -10,6 +10,10 @@ export const ADD_TODO_REQUEST = 'ADD_TODO_REQUEST'
 export const ADD_TODO_SUCCESS = 'ADD_TODO_SUCCESS'
 export const ADD_TODO_FAIL = 'ADD_TODO_FAIL'
 
+export const UPDATE_TODO_REQUEST = 'UPDATE_TODO_REQUEST'
+export const UPDATE_TODO_SUCCESS = 'UPDATE_TODO_SUCCESS'
+export const UPDATE_TODO_FAIL = 'UPDATE_TODO_FAIL'
+
 export interface ITodo {
     _id?: string,
     name: string
@@ -20,12 +24,12 @@ export interface ITodo {
 }
 
 export interface TodosFail {
-    type: typeof GET_TODOS_FAIL | typeof ADD_TODO_FAIL | typeof GET_TODO_FAIL,
+    type: typeof GET_TODOS_FAIL | typeof ADD_TODO_FAIL | typeof GET_TODO_FAIL | typeof UPDATE_TODO_FAIL,
     payload: any
 }
 
 export interface TodosRequest {
-    type: typeof GET_TODOS_REQUEST | typeof ADD_TODO_REQUEST | typeof GET_TODO_REQUEST
+    type: typeof GET_TODOS_REQUEST | typeof ADD_TODO_REQUEST | typeof GET_TODO_REQUEST | typeof UPDATE_TODO_REQUEST
 }
 
 // GET TODOS SUCCESS & DISPATCH
@@ -49,3 +53,11 @@ export interface AddTodoSuccess {
 }
 
 export type AddTodoDispatch = AddTodoSuccess | TodosFail | TodosRequest
+
+// UPDATE TODO SUCCESS & DISPATCH
+export interface UpdateTodoSuccess {
+    type: typeof UPDATE_TODO_SUCCESS,
+    payload: ITodo
+}
+
+export type UpdateTodoDispatch = UpdateTodoSuccess | TodosFail | TodosRequest

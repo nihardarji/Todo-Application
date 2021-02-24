@@ -1,4 +1,4 @@
-import { AddTodoDispatch, ADD_TODO_FAIL, ADD_TODO_REQUEST, ADD_TODO_SUCCESS, GetTodoDispatch, GetTodosDispatch, GET_TODOS_FAIL, GET_TODOS_REQUEST, GET_TODOS_SUCCESS, GET_TODO_FAIL, GET_TODO_REQUEST, GET_TODO_SUCCESS, ITodo } from "../actions/todoActionsTypes"
+import { AddTodoDispatch, ADD_TODO_FAIL, ADD_TODO_REQUEST, ADD_TODO_SUCCESS, GetTodoDispatch, GetTodosDispatch, GET_TODOS_FAIL, GET_TODOS_REQUEST, GET_TODOS_SUCCESS, GET_TODO_FAIL, GET_TODO_REQUEST, GET_TODO_SUCCESS, ITodo, UpdateTodoDispatch, UPDATE_TODO_FAIL, UPDATE_TODO_REQUEST, UPDATE_TODO_SUCCESS } from "../actions/todoActionsTypes"
 
 interface InitialGetTodoI {
     loading: boolean,
@@ -41,11 +41,11 @@ export const getTodosReducer = (state: InitialGetTodoI = initialState, action: G
 
 interface initialTodoI {
     todo: ITodo | {},
-    loading: boolean,
+    loading?: boolean,
     error?: any
 }
 
-export const getTodoReducer = (state: initialTodoI = { todo: {}, loading: false }, action: GetTodoDispatch): initialTodoI => {
+export const getTodoReducer = (state: initialTodoI = { todo: {} }, action: GetTodoDispatch): initialTodoI => {
     switch (action.type) {
         case GET_TODO_REQUEST:
             return {
@@ -71,7 +71,7 @@ export const getTodoReducer = (state: initialTodoI = { todo: {}, loading: false 
     }
 }
 
-export const addTodoReducer = (state: initialTodoI = { todo: {}, loading: false }, action: AddTodoDispatch): initialTodoI => {
+export const addTodoReducer = (state: initialTodoI = { todo: {} }, action: AddTodoDispatch): initialTodoI => {
     switch (action.type) {
         case ADD_TODO_REQUEST:
             return {
@@ -86,6 +86,33 @@ export const addTodoReducer = (state: initialTodoI = { todo: {}, loading: false 
             }
 
         case ADD_TODO_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
+        
+        default:
+            return state
+    }
+    
+}
+
+export const updateTodoReducer = (state: initialTodoI = { todo: {} }, action: UpdateTodoDispatch): initialTodoI => {
+    switch (action.type) {
+        case UPDATE_TODO_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+            
+        case UPDATE_TODO_SUCCESS:
+            return {
+                todo: action.payload,
+                loading: false
+            }
+
+        case UPDATE_TODO_FAIL:
             return {
                 ...state,
                 loading: false,
