@@ -16,6 +16,10 @@ export const UPDATE_TODO_REQUEST = 'UPDATE_TODO_REQUEST'
 export const UPDATE_TODO_SUCCESS = 'UPDATE_TODO_SUCCESS'
 export const UPDATE_TODO_FAIL = 'UPDATE_TODO_FAIL'
 
+export const DELETE_TODO_REQUEST = 'DELETE_TODO_REQUEST'
+export const DELETE_TODO_SUCCESS = 'DELETE_TODO_SUCCESS'
+export const DELETE_TODO_FAIL = 'DELETE_TODO_FAIL'
+
 export interface ITodo {
     _id?: string,
     name: string
@@ -26,12 +30,12 @@ export interface ITodo {
 }
 
 export interface TodosFail {
-    type: typeof GET_TODOS_FAIL | typeof ADD_TODO_FAIL | typeof GET_TODO_FAIL | typeof UPDATE_TODO_FAIL,
+    type: typeof GET_TODOS_FAIL | typeof ADD_TODO_FAIL | typeof GET_TODO_FAIL | typeof UPDATE_TODO_FAIL | typeof DELETE_TODO_FAIL,
     payload: any
 }
 
 export interface TodosRequest {
-    type: typeof GET_TODOS_REQUEST | typeof ADD_TODO_REQUEST | typeof GET_TODO_REQUEST | typeof UPDATE_TODO_REQUEST
+    type: typeof GET_TODOS_REQUEST | typeof ADD_TODO_REQUEST | typeof GET_TODO_REQUEST | typeof UPDATE_TODO_REQUEST | typeof DELETE_TODO_REQUEST
 }
 
 // GET TODOS SUCCESS & DISPATCH
@@ -68,3 +72,10 @@ export interface UpdateTodoSuccess {
 }
 
 export type UpdateTodoDispatch = UpdateTodoSuccess | TodosFail | TodosRequest
+
+// DELETE TODO SUCCESS & DISPATCH
+export interface DeleteTodoSuccess {
+    type: typeof DELETE_TODO_SUCCESS
+}
+
+export type DeleteTodoDispatch = DeleteTodoSuccess | TodosFail | TodosRequest

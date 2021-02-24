@@ -1,4 +1,4 @@
-import { AddTodoDispatch, ADD_TODO_FAIL, ADD_TODO_REQUEST, ADD_TODO_SUCCESS, GetTodoDispatch, GetTodosDispatch, GET_TODOS_FAIL, GET_TODOS_REQUEST, GET_TODOS_SUCCESS, GET_TODO_FAIL, GET_TODO_REQUEST, GET_TODO_RESET, GET_TODO_SUCCESS, ITodo, UpdateTodoDispatch, UPDATE_TODO_FAIL, UPDATE_TODO_REQUEST, UPDATE_TODO_SUCCESS } from "../actions/todoActionsTypes"
+import { AddTodoDispatch, ADD_TODO_FAIL, ADD_TODO_REQUEST, ADD_TODO_SUCCESS, DeleteTodoDispatch, DELETE_TODO_REQUEST, DELETE_TODO_SUCCESS, GetTodoDispatch, GetTodosDispatch, GET_TODOS_FAIL, GET_TODOS_REQUEST, GET_TODOS_SUCCESS, GET_TODO_FAIL, GET_TODO_REQUEST, GET_TODO_RESET, GET_TODO_SUCCESS, ITodo, UpdateTodoDispatch, UPDATE_TODO_FAIL, UPDATE_TODO_REQUEST, UPDATE_TODO_SUCCESS } from "../actions/todoActionsTypes"
 
 interface InitialGetTodoI {
     loading: boolean,
@@ -130,3 +130,36 @@ export const updateTodoReducer = (state: initialTodoI = { todo: {} }, action: Up
     
 }
 
+interface deleteTodoI {
+    loading?: boolean,
+    error?: any,
+    success?: boolean
+}
+
+export const deleteTodoReducer = (state: deleteTodoI = {}, action: DeleteTodoDispatch): deleteTodoI => {
+    switch (action.type) {
+        case DELETE_TODO_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+            
+        case DELETE_TODO_SUCCESS:
+            return {
+                ...state,
+                success: true,
+                loading: false
+            }
+
+        case UPDATE_TODO_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
+        
+        default:
+            return state
+    }
+    
+}

@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Badge, Button, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { getTodoList, updateTodo } from '../actions/todoActions'
+import { deleteTodo, getTodoList, updateTodo } from '../actions/todoActions'
 import { ITodo } from '../actions/todoActionsTypes'
 import { RootStore } from '../store'
 
@@ -14,11 +14,13 @@ const TodoList = () => {
 
     const addTodo = useSelector((state: RootStore) => state.addTodo)
     const updateTodoStore = useSelector((state: RootStore) => state.updateTodo)
+    const deleteTodoStore = useSelector((state: RootStore) => state.deleteTodo)
+    const { success } = deleteTodoStore
 
 
     useEffect(() => {
         dispatch(getTodoList())
-    }, [dispatch, addTodo, updateTodoStore])
+    }, [dispatch, addTodo, updateTodoStore, success])
 
     const markAsCompleteHandler = (todo: ITodo) => {
         if(window.confirm("Are you sure?")){
@@ -26,6 +28,12 @@ const TodoList = () => {
                 ...todo,
                 status: true
             }))
+        }
+    }
+
+    const deleteHandler = (id: any) => {
+        if(window.confirm('Are you sure want to delete?')){
+            dispatch(deleteTodo(id))
         }
     }
 
@@ -37,7 +45,7 @@ const TodoList = () => {
                         <Card.Title className='text-success'>
                             <div className='d-flex justify-content-between align-items-center'>
                                 {todo.name}
-                                <Button size='sm' variant='danger'><i className='fa fa-lg fa-trash'></i></Button>
+                                <Button size='sm' onClick={() => deleteHandler(todo._id)} variant='danger'><i className='fa fa-lg fa-trash'></i></Button>
                             </div>
                         </Card.Title>
                         <Card.Subtitle className="mb-2 text-muted">{todo.status ? 'Completed' : 'In Progress'}</Card.Subtitle>
@@ -52,7 +60,7 @@ const TodoList = () => {
                                     <Badge pill className='p-2' variant='success'> <i className='fa fa-check'></i> Completed</Badge>
                                 </div>
                             }
-                            <Link to={`/edit/todo/${todo._id}`} className='btn btn-success btn-sm'>Edit</Link>
+                            {!todo.status && <Link to={`/edit/todo/${todo._id}`} className='btn btn-success btn-sm'>Edit</Link>}
                         </div>
                     </Card.Body>
                 </Card>
