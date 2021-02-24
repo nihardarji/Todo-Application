@@ -12,12 +12,13 @@ const TodoList = () => {
     const getTodos = useSelector((state: RootStore) => state.getTodos)
     const { todos }: { todos: ITodo[]} = getTodos
 
-    const addTodo = useSelector((state: RootStore) => state.addTodo )
+    const addTodo = useSelector((state: RootStore) => state.addTodo)
+    const updateTodo = useSelector((state: RootStore) => state.updateTodo)
 
 
     useEffect(() => {
         dispatch(getTodoList())
-    }, [dispatch, addTodo])
+    }, [dispatch, addTodo, updateTodo])
 
 
     return (

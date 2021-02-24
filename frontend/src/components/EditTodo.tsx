@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link, RouteComponentProps } from 'react-router-dom'
-import { addTodo, getTodoById } from '../actions/todoActions'
-import { ITodo } from '../actions/todoActionsTypes'
+import { addTodo, getTodoById, updateTodo } from '../actions/todoActions'
+import { GET_TODO_RESET, ITodo } from '../actions/todoActionsTypes'
 import { RootStore } from '../store'
 
 interface RouteParams { id?: string }
@@ -36,7 +36,12 @@ const EditTodo: React.FC<EditTodoProps> = ({ history, match }) => {
     const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         if(todoId){
-            console.log('Update Todo')
+            dispatch(updateTodo({
+                _id: todoId,
+                name,
+                description,
+            }))
+            history.push('/')
         } else {
             dispatch(addTodo({
                 name,
@@ -44,6 +49,7 @@ const EditTodo: React.FC<EditTodoProps> = ({ history, match }) => {
             }))
             history.push('/')
         }
+        dispatch({ type: GET_TODO_RESET })
     }
 
     return (

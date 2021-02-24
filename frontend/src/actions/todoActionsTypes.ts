@@ -5,6 +5,8 @@ export const GET_TODOS_FAIL = 'GET_TODOS_FAIL'
 export const GET_TODO_REQUEST = 'GET_TODO_REQUEST'
 export const GET_TODO_SUCCESS = 'GET_TODO_SUCCESS'
 export const GET_TODO_FAIL = 'GET_TODO_FAIL'
+export const GET_TODO_RESET = 'GET_TODO_RESET'
+
 
 export const ADD_TODO_REQUEST = 'ADD_TODO_REQUEST'
 export const ADD_TODO_SUCCESS = 'ADD_TODO_SUCCESS'
@@ -38,13 +40,18 @@ export interface GetTodosSuccess {
     payload: ITodo[]
 }
 
+export type GetTodosDispatch = GetTodosSuccess | TodosFail | TodosRequest
+
+// GET TODO SUCCESS & DISPATCH
 export interface GetTodoSuccess {
     type: typeof GET_TODO_SUCCESS,
     payload: ITodo
 }
+export interface TodoReset {
+    type: typeof GET_TODO_RESET
+}
 
-export type GetTodosDispatch = GetTodosSuccess | TodosFail | TodosRequest
-export type GetTodoDispatch = GetTodoSuccess | TodosFail | TodosRequest
+export type GetTodoDispatch = GetTodoSuccess | TodosFail | TodosRequest | TodoReset
 
 // ADD TODO SUCCESS & DISPATCH
 export interface AddTodoSuccess {

@@ -1,4 +1,4 @@
-import { AddTodoDispatch, ADD_TODO_FAIL, ADD_TODO_REQUEST, ADD_TODO_SUCCESS, GetTodoDispatch, GetTodosDispatch, GET_TODOS_FAIL, GET_TODOS_REQUEST, GET_TODOS_SUCCESS, GET_TODO_FAIL, GET_TODO_REQUEST, GET_TODO_SUCCESS, ITodo, UpdateTodoDispatch, UPDATE_TODO_FAIL, UPDATE_TODO_REQUEST, UPDATE_TODO_SUCCESS } from "../actions/todoActionsTypes"
+import { AddTodoDispatch, ADD_TODO_FAIL, ADD_TODO_REQUEST, ADD_TODO_SUCCESS, GetTodoDispatch, GetTodosDispatch, GET_TODOS_FAIL, GET_TODOS_REQUEST, GET_TODOS_SUCCESS, GET_TODO_FAIL, GET_TODO_REQUEST, GET_TODO_RESET, GET_TODO_SUCCESS, ITodo, UpdateTodoDispatch, UPDATE_TODO_FAIL, UPDATE_TODO_REQUEST, UPDATE_TODO_SUCCESS } from "../actions/todoActionsTypes"
 
 interface InitialGetTodoI {
     loading: boolean,
@@ -64,6 +64,11 @@ export const getTodoReducer = (state: initialTodoI = { todo: {} }, action: GetTo
                 ...state,
                 loading: false,
                 error: action.payload
+            }
+
+        case GET_TODO_RESET:
+            return {
+                todo: {}
             }
     
         default:
