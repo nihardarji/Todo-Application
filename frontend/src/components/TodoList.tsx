@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { Badge, Button, Card } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { getTodoList } from '../actions/todoActions'
+import { getTodoList, updateTodo } from '../actions/todoActions'
 import { ITodo } from '../actions/todoActionsTypes'
 import { RootStore } from '../store'
 
@@ -13,27 +13,40 @@ const TodoList = () => {
     const { todos }: { todos: ITodo[]} = getTodos
 
     const addTodo = useSelector((state: RootStore) => state.addTodo)
-    const updateTodo = useSelector((state: RootStore) => state.updateTodo)
+    const updateTodoStore = useSelector((state: RootStore) => state.updateTodo)
 
 
     useEffect(() => {
         dispatch(getTodoList())
-    }, [dispatch, addTodo, updateTodo])
+    }, [dispatch, addTodo, updateTodoStore])
 
+    const markAsCompleteHandler = (todo: ITodo) => {
+        if(window.confirm("Are you sure?")){
+            dispatch(updateTodo({
+                ...todo,
+                status: true
+            }))
+        }
+    }
 
     return (
         <>
             {todos.map((todo: ITodo) => (
                 <Card key={todo._id} className='my-2' bg='dark' text='light'>
                     <Card.Body>
-                        <Card.Title className='text-success'>{todo.name}</Card.Title>
+                        <Card.Title className='text-success'>
+                            <div className='d-flex justify-content-between align-items-center'>
+                                {todo.name}
+                                <Button size='sm' variant='danger'><i className='fa fa-lg fa-trash'></i></Button>
+                            </div>
+                        </Card.Title>
                         <Card.Subtitle className="mb-2 text-muted">{todo.status ? 'Completed' : 'In Progress'}</Card.Subtitle>
                         <Card.Text>
                             {todo.description}
                         </Card.Text>
                         <div className='d-flex justify-content-between align-items-center'>
                             {!todo.status ? 
-                                <Button className='btn btn-success btn-sm'>Mark as Complete</Button>
+                                <Button onClick={() => markAsCompleteHandler(todo)} className='btn btn-success btn-sm'>Mark as Complete</Button>
                             :
                                 <div>
                                     <Badge pill className='p-2' variant='success'> <i className='fa fa-check'></i> Completed</Badge>
