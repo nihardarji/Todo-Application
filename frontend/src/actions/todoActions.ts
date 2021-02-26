@@ -16,7 +16,7 @@ export const getTodoList = () => async (dispatch: Dispatch<GetTodosDispatch>) =>
     } catch (error) {
         dispatch({
             type: GET_TODOS_FAIL,
-            payload: error.response
+            payload: error.response && error.response.data.message ? error.response.data.message : error.message
         })
     }
 }
@@ -35,7 +35,7 @@ export const getTodoById = (id: string) => async (dispatch: Dispatch<GetTodoDisp
     } catch (error) {
         dispatch({
             type: GET_TODO_FAIL,
-            payload: error.response
+            payload: error.response && error.response.data.message ? error.response.data.message : error.message
         })
     }
 }
@@ -54,7 +54,7 @@ export const addTodo = (todo: ITodo) => async (dispatch: Dispatch<AddTodoDispatc
     } catch (error) {
         dispatch({
             type: ADD_TODO_FAIL,
-            payload: error.response
+            payload: error.response && error.response.data.message ? error.response.data.message : error.message
         })
     }
 }
@@ -73,7 +73,7 @@ export const updateTodo = (todo: ITodo) => async (dispatch: Dispatch<UpdateTodoD
     } catch (error) {
         dispatch({
             type: UPDATE_TODO_FAIL,
-            payload: error.response
+            payload: error.response && error.response.data.message ? error.response.data.message : error.message
         })
     }
 }
@@ -91,7 +91,7 @@ export const deleteTodo = (id: string) => async (dispatch: Dispatch<DeleteTodoDi
     } catch (error) {
         dispatch({
             type: DELETE_TODO_FAIL,
-            payload: error.response
+            payload: error.response && error.response.data.message ? error.response.data.message : error.message
         })
     }
 }
